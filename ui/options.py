@@ -7,62 +7,70 @@ from datetime import datetime
 # * Filter orders by status
 
 
-def create_order():
-    valid_statuses = {"pending", "processing", "shipped", "cancelled"}
+from datetime import datetime
 
+
+VALID_STATUSES = {"pending", "processing", "shipped", "cancelled"}
+
+
+def get_quantity():
     while True:
-        order_id = input("Enter ID: ").strip()
-        customer_name = input("Enter customer name: ").strip()
-        product = input("Enter product: ").strip()
+        try:
+            quantity = int(input("Enter quantity: "))
 
-        while True:
-            try:
-                quantity = int(input("Enter quantity: "))
+            if quantity > 0:
+                return quantity
 
-                if quantity > 0:
-                    break
+            print("Quantity must be greater than 0.")
 
-                print("Quantity must be greater than 0.")
+        except ValueError:
+            print("Enter a valid whole number.")
 
-            except ValueError:
-                print("Enter a valid whole number.")
 
-        while True:
-            try:
-                price = float(input("Enter price: "))
+def get_price():
+    while True:
+        try:
+            price = float(input("Enter price: "))
 
-                if price >= 0:
-                    break
+            if price >= 0:
+                return price
 
-                print("Price cannot be negative.")
+            print("Price cannot be negative.")
 
-            except ValueError:
-                print("Enter a valid price.")
+        except ValueError:
+            print("Enter a valid price.")
 
-        while True:
-            status = input(
-                "Enter status (pending, processing, shipped, cancelled): "
-            ).strip().lower()
 
-            if status in valid_statuses:
-                break
+def get_status():
+    while True:
+        status = input(
+            "Enter status (pending, processing, shipped, cancelled): "
+        ).strip().lower()
 
-            print("Invalid status.")
+        if status in VALID_STATUSES:
+            return status
 
+        print("Invalid status.")
+
+
+def create_order():
+    while True:
         order = {
-            "id": order_id,
-            "customer_name": customer_name,
-            "product": product,
-            "quantity": quantity,
-            "price": price,
-            "status": status,
+            "id": input("Enter ID: ").strip(),
+            "customer_name": input("Enter customer name: ").strip(),
+            "product": input("Enter product: ").strip(),
+            "quantity": get_quantity(),
+            "price": get_price(),
+            "status": get_status(),
             "created_at": datetime.now()
         }
 
         print()
         print(order)
 
-        confirmation = input("Is your order correct? (yes/no): ").strip().lower()
+        confirmation = input(
+            "Is your order correct? (yes/no): "
+        ).strip().lower()
 
         if confirmation == "yes":
             return order
