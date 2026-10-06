@@ -1,16 +1,17 @@
 from datetime import datetime
-# * Create an order
-# * Get one order
-# * Get all orders
-# * Update an order
-# * Delete an order
-# * Filter orders by status
-
-
-from datetime import datetime
 
 
 VALID_STATUSES = {"pending", "processing", "shipped", "cancelled"}
+
+
+def get_required_input(prompt):
+    while True:
+        value = input(prompt).strip()
+
+        if value:
+            return value
+
+        print("This field cannot be empty.")
 
 
 def get_quantity():
@@ -53,12 +54,27 @@ def get_status():
         print("Invalid status.")
 
 
+def confirm_order():
+    while True:
+        confirmation = input(
+            "Is your order correct? (yes/no): "
+        ).strip().lower()
+
+        if confirmation == "yes":
+            return True
+
+        if confirmation == "no":
+            return False
+
+        print("Enter yes or no.")
+
+
 def create_order():
     while True:
         order = {
-            "id": input("Enter ID: ").strip(),
-            "customer_name": input("Enter customer name: ").strip(),
-            "product": input("Enter product: ").strip(),
+            "id": get_required_input("Enter ID: "),
+            "customer_name": get_required_input("Enter customer name: "),
+            "product": get_required_input("Enter product: "),
             "quantity": get_quantity(),
             "price": get_price(),
             "status": get_status(),
@@ -67,12 +83,9 @@ def create_order():
 
         print()
         print(order)
+        print()
 
-        confirmation = input(
-            "Is your order correct? (yes/no): "
-        ).strip().lower()
-
-        if confirmation == "yes":
+        if confirm_order():
             return order
 
         print("\nLet's enter the order again.\n")
