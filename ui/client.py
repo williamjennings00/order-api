@@ -12,3 +12,7 @@ def send_order():
     )
 
     print(response.json())
+
+
+if __name__ == "__main__":
+    send_order()
