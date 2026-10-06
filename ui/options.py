@@ -72,13 +72,11 @@ def confirm_order():
 def create_order():
     while True:
         order = {
-            "id": get_required_input("Enter ID: "),
             "customer_name": get_required_input("Enter customer name: "),
             "product": get_required_input("Enter product: "),
             "quantity": get_quantity(),
             "price": get_price(),
             "status": get_status(),
-            "created_at": datetime.now()
         }
 
         print()
