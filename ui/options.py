@@ -87,3 +87,29 @@ def create_order():
             return order
 
         print("\nLet's enter the order again.\n")
+
+def confirm_get_order():
+    while True:
+        confirmation = input(
+            "Is the order ID you want to retrieve correct? (yes/no): "
+        ).strip().lower()
+
+        if confirmation == "yes":
+            return True
+
+        if confirmation == "no":
+            return False
+
+        print("Enter yes or no.")
+
+def get_order_id():
+    while True:
+        order_id = get_required_input("Enter order ID: ")
+
+        print()
+        print(order_id)
+        print()
+
+        if confirm_get_order():
+            return
+        print("\nLet's enter the order ID again.\n")
