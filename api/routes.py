@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
+from sqlalchemy import select
 
 from database.db import SessionLocal
 from database.models import Order
@@ -41,6 +42,12 @@ def create_order(order_data: OrderCreate, db: Session = Depends(get_db)):
     db.refresh(order)
 
     return order
+
+@router.get("/orders")
+def get_all_orders(db: Session = Depends(get_db)):
+    statement = select(Order)
+    orders = db.scalars(statement).all()
+    return orders
 
 
 @router.get("/orders/{order_id}")

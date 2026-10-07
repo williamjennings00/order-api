@@ -23,7 +23,16 @@ def get_order():
     print("Status:", response.status_code)
     print("Response:", response.text)
 
+def get_all_orders():
+
+    response = httpx.get(
+        f"http://127.0.0.1:8000/orders"
+    )
+    print("Status:", response.status_code)
+    print("Response:", response.text)
+
 
 if __name__ == "__main__":
     send_order()
     get_order()
+    get_all_orders()
