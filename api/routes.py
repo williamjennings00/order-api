@@ -17,6 +17,14 @@ class OrderCreate(BaseModel):
     price: float = Field(ge=0)
     status: str = "pending"
 
+class OrderUpdate(BaseModel):
+    customer_name: str | None = None
+    product: str | None = None
+    quantity: int | None = Field(default=None, gt=0)
+    price: float | None = Field(default=None, ge=0)
+    status: str | None = None
+
+
 
 def get_db():
     db = SessionLocal()
@@ -59,5 +67,29 @@ def get_order(order_id: str, db: Session = Depends(get_db)):
             status_code=404,
             detail="Order not found",
         )
+
+    return order
+
+@router.patch("/orders/{order_id}")
+def update_order(
+    order_id: int,
+    order_data: OrderUpdate,
+    db: Session = Depends(get_db),
+):
+    order = db.get(Order, order_id)
+
+    if order is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Order not found",
+        )
+
+    updates = order_data.model_dump(exclude_unset=True)
+
+    for field, value in updates.items():
+        setattr(order, field, value)
+
+    db.commit()
+    db.refresh(order)
 
     return order
