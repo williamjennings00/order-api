@@ -166,5 +166,25 @@ def get_order_to_update():
 
     return order_id, new_status
 
+
+def get_order_to_delete():
+    while True:
+        order_id = get_required_input("Enter order ID to delete: ")
+
+        print()
+        print(order_id)
+        print()
+
+        confirm = input(
+            "Is this the order ID you want to delete? (yes/no): "
+        ).strip().lower()
+
+        if confirm == "yes":
+            return order_id
+
+        print("\nLet's enter the order ID again.\n")
+
+
+
     
 

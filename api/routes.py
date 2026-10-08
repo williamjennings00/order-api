@@ -93,3 +93,21 @@ def update_order(
     db.refresh(order)
 
     return order
+
+
+@router.delete("/orders/{order_id}")
+def delete_order(order_id: int, db: Session = Depends(get_db)):
+    order = db.get(Order, order_id)
+
+    if order is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Order not found",
+        )
+
+    db.delete(order)
+    db.commit()
+
+    return {
+        "message": f"Order {order_id} deleted"
+    }

@@ -1,7 +1,16 @@
 import httpx
 
-from ui.options import create_order, get_order_to_update
+from ui.options import create_order, get_order_to_update, get_order_to_delete
 
+def delete_order():
+    order_id = get_order_to_delete()
+
+    response = httpx.delete(
+        f"http://127.0.0.1:8000/orders/{order_id}"
+    )
+
+    print("Status:", response.status_code)
+    print("Response:", response.text)
 
 def send_order():
     order = create_order()
@@ -44,9 +53,15 @@ def update_order():
     print("Status:", response.status_code)
     print("Response:", response.text)
 
+
+
+
 if __name__ == "__main__":
     send_order()
     get_order()
     get_all_orders()
     update_order()
     get_all_orders()
+    delete_order()
+    get_all_orders()
+    
