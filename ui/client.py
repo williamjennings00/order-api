@@ -1,6 +1,6 @@
 import httpx
 
-from ui.options import create_order, get_order_to_update, get_order_to_delete
+from ui.options import create_order, get_order_to_update, get_order_to_delete, user_input_all_orders_by_status
 
 def delete_order():
     order_id = get_order_to_delete()
@@ -53,6 +53,14 @@ def update_order():
     print("Status:", response.status_code)
     print("Response:", response.text)
 
+def get_all_orders_by_status():
+    status = user_input_all_orders_by_status()
+    response = httpx.get(
+        f"http://127.0.0.1:8000/orders", 
+        params={"status": status}
+    )
+    print("Status:", response.status_code)
+    print("Response:", response.text)
 
 
 
@@ -63,5 +71,5 @@ if __name__ == "__main__":
     update_order()
     get_all_orders()
     delete_order()
-    get_all_orders()
+    get_all_orders_by_status()
     

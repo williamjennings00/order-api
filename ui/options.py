@@ -186,5 +186,24 @@ def get_order_to_delete():
 
 
 
+def user_input_all_orders_by_status():
+    while True:
+        status = get_required_input(
+            "Enter order status to filter by: "
+        ).strip().lower()
+
+        print()
+        print(f"Status: {status}")
+        print()
+
+        confirm = input(
+            "Is this the status you want to search for? (yes/no): "
+        ).strip().lower()
+
+        if confirm == "yes":
+            return status
+
+        print("\nLet's enter the status again.\n")
+
     
 

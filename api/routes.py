@@ -52,11 +52,18 @@ def create_order(order_data: OrderCreate, db: Session = Depends(get_db)):
     return order
 
 @router.get("/orders")
-def get_all_orders(db: Session = Depends(get_db)):
+def get_all_orders(
+    status: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
     statement = select(Order)
-    orders = db.scalars(statement).all()
-    return orders
 
+    if status is not None:
+        statement = statement.where(Order.status == status)
+
+    orders = db.scalars(statement).all()
+
+    return orders
 
 @router.get("/orders/{order_id}")
 def get_order(order_id: str, db: Session = Depends(get_db)):
