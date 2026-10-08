@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-
+from typing import Optional
 from database.db import SessionLocal
 from database.models import Order
 
@@ -18,11 +18,11 @@ class OrderCreate(BaseModel):
     status: str = "pending"
 
 class OrderUpdate(BaseModel):
-    customer_name: str | None = None
-    product: str | None = None
-    quantity: int | None = Field(default=None, gt=0)
-    price: float | None = Field(default=None, ge=0)
-    status: str | None = None
+    customer_name: Optional[str] = None
+    product: Optional[str] = None
+    quantity: Optional[int] = Field(default=None, gt=0)
+    price: Optional[float] = Field(default=None, ge=0)
+    status: Optional[str] = None
 
 
 

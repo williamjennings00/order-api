@@ -113,3 +113,58 @@ def get_order_id():
         if confirm_get_order():
             return
         print("\nLet's enter the order ID again.\n")
+
+def confirm_order_update_id():
+    while True:
+        confirmation = input(
+            "Is the order ID correct? (yes/no): "
+        ).strip().lower()
+
+        if confirmation == "yes":
+            return True
+
+        if confirmation == "no":
+            return False
+
+        print("Enter yes or no.")
+
+def confirm_new_status():
+    while True:
+        confirmation = input(
+            "Is the new status correct? (yes/no): "
+        ).strip().lower()
+
+        if confirmation == "yes":
+            return True
+
+        if confirmation == "no":
+            return False
+
+        print("Enter yes or no.")
+
+def get_order_to_update():
+    while True:
+        order_id = get_required_input("Enter order ID: ")
+
+        print()
+        print(order_id)
+        print()
+
+        if confirm_order_update_id():
+            break 
+        print("\nLet's enter the order ID again.\n")
+
+    while True:
+        new_status = get_status()
+
+        print()
+        print(new_status)
+
+        if confirm_new_status():
+            break
+        print("\nLet's enter the new status again.\n")
+
+    return order_id, new_status
+
+    
+
